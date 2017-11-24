@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 
 # Create your views here.
-from votos.models import *
+from .models import *
 
 
 def resultado_global(request):
@@ -22,7 +22,7 @@ def resultado_global(request):
     context['distritos'] = Distrito.objects.all()
     
     candidatos = Candidato.objects.all()
-    candidatoNulo = Candidato.objects.get(nombre = "Nulo")
+    candidatoNulo = Candidato.objects.get(nombre = "Candidato Nulo")
     votos = Votos.objects.all().count()
     votoi= 0
     
@@ -41,6 +41,12 @@ def resultado_global(request):
     print "porce nulos: " + str(porcentajeNulos)
     print "Votos null: " + str(votosNull)
     print "Votos: " + str(votos)
+ 
+#-------------------- 
+    
+    genteDistrito = Distrito.objects.get(cantidad_votantes).count()
+    print genteDistrito
+    
     return render(request,'global.html',context)
 
 
@@ -55,6 +61,28 @@ def resultado_distrital(request):
     """
     context={}
 
+    votos = Votos.objects.all().count()
+    votoi= 0
+    cantidad_ganador = 0
+    ganador = ""
+    candidatos = Candidato.objects.all()
+    candidatoNulo = Candidato.objects.get(nombre = "Candidato Nulo")
+
+    #genteDistrito = Distrito.objects.filter(cantidad_votantes).count()
+    
+    
+    
+    for i in candidatos:
+	    if i != candidatoNulo:
+		    votoi = Votos.objects.filter(candidato_id = i).count()
+		    if votoi == cantidad_ganador:
+				ganador += str("Empató con ") + str(i)
+				cantidad_ganador = votoi
+		    if votoi > cantidad_ganador:
+				ganador = i
+				cantidad_ganador = votoi
+	    
+    print ganador
 		    
     
     return render(request,'distrital.html',context)

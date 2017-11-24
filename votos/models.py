@@ -46,6 +46,7 @@ class Votos(models.Model):
     Solo incluí lo necesario para el conteo
     """
     candidato_id = models.ForeignKey(Candidato, on_delete=models.CASCADE)
+    distrito_id = models.ForeignKey(Distrito, on_delete=models.CASCADE)
     
     
 	
