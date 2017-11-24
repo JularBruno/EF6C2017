@@ -1,7 +1,10 @@
 <h1>Resultado de elecciones</h1>
 
-<!-- Deberias escribir el codigo aqui -->
-
+<form action="{% url 'resultado_global' %}" method="POST">
+		{% csrf_token %}	
+		<input type="submit">
+	</form>
+<p id="votos_nulos"></p>
 
 <h2>Resultados Por distrito</h2>
 

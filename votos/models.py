@@ -33,6 +33,9 @@ class Candidato(models.Model):
 	nombre = models.TextField()
 	partido = models.TextField()
 	distrito_id = models.ForeignKey(Distrito, on_delete=models.CASCADE)
+	
+	def __str__(self):
+		return 'Candidato {}'.format(self.nombre)
 
 class Votos(models.Model):
     """

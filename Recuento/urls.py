@@ -24,4 +24,5 @@ urlpatterns = [
     #TODO: Arreglar esta URL para que tome por parametro el id del distrito
     url(r'^distrital/', resultado_distrital, name='distrital'),
     url(r'^admin/', admin.site.urls),
+    url(r'^resultado_global/', resultado_global, name="resultado_global"),
 ]

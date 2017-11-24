@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.template.loader import render_to_string
 
 # Create your views here.
 from votos.models import *
@@ -20,9 +21,26 @@ def resultado_global(request):
     context={}
     context['distritos'] = Distrito.objects.all()
     
+    candidatos = Candidato.objects.all()
+    candidatoNulo = Candidato.objects.get(nombre = "Nulo")
+    votos = Votos.objects.all().count()
+    votoi= 0
+    
+    for i in candidatos:
+	    if i != candidatoNulo:
+		    votoi = Votos.objects.filter(candidato_id = i).count()
+		    print "voto de " + str(i) + " cantidad: " + str(votoi)
+            porcentajeVotos = (votoi * 100)/votos
+            print "porc voto " + str(i) + " " + str(porcentajeVotos)
+    
+    
+    votosNull = Votos.objects.filter(candidato_id = candidatos).count()
 	
-
-
+    porcentajeNulos = (votosNull * 100)/votos 	   
+	
+    print "porce nulos: " + str(porcentajeNulos)
+    print "Votos null: " + str(votosNull)
+    print "Votos: " + str(votos)
     return render(request,'global.html',context)
 
 
@@ -37,6 +55,8 @@ def resultado_distrital(request):
     """
     context={}
 
-    #TODO TU CODIGO AQUI
-
+		    
+    
     return render(request,'distrital.html',context)
+    
+    
