@@ -19,7 +19,9 @@ def resultado_global(request):
     """
     context={}
     context['distritos'] = Distrito.objects.all()
-    #TODO TU CODIGO AQUI
+    
+	
+
 
     return render(request,'global.html',context)
 
